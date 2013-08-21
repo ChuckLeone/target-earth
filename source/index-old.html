@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Shooter</title>
+		<link rel="stylesheet" type="text/css" href="main.css"/>
+	</head>
+	<body>
+		<canvas id="background" width="600" height="360">
+			Your browser does not support canvas. Please try again with a different browser
+		</canvas>
+		<canvas id="main" width="600" height="360"></canvas>
+		<canvas id="ship" width="600" height="360"></canvas>
+		<canvas id="fx" width="600" height="360"></canvas>
+		<div class="wave" id="wave">WAVE:<span id="wave-number"></span></div>
+		<div class="score">SCORE:<span id="score"></span></div>
+		<div class="lives">LIVES:<span id="lives"></span></div>
+		<div class="game-over" id="game-over">GAME OVER
+			<p><div class="highs">High Score: <span id="highScore"></span></div></p>
+			<p><div class="highs">Highest Wave:<span id="highWave"></span></div></p>
+			<p><span onclick="game.restart()">PLAY AGAIN</span>
+		</div>
+		<div class="loading" id="loading">LOADING...</div>
+		<div class="player-alert" id="player-alert"></div>
+		<script src="game1.8.2.js"></script>		
+	</body>
+</html>
