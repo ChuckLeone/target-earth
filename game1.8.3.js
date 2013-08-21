@@ -17,8 +17,8 @@ var highWave = [];
 var game = new Game();
 
 function init() {
-		splashScreen();
-// 	   game.init();
+		//splashScreen();
+	   game.init();
 }
 /**
  * define images
@@ -1048,25 +1048,7 @@ function Game() {
 		
 		
 		//test to see if canvas is supported
-		if (this.mainCanvas.getContext) {
-			// loading screen
-			// this.loadingScreen = function() {
-// 				var canvas = this.mainCanvas;
-//   				var c = document.getElementById('main');
-// 				var ctx = c.getContext('2d');
-//     			var centerX =  canvas.width / 2;
-//     			var centerY = canvas.height / 2;
-// 				var loadingX = ('"' + centerX / 2 + 'px"');
-//     			var loadingY = ('"' + centerY / 2 + 'px"');
-//     			ctx.fillStyle = 'black';
-//     			ctx.fillRect(centerX, centerY, 50, 100);
-//     			ctx.font = '30px arial';
-//     			ctx.textAlign = 'center';
-//     			ctx.fillStyle = 'blue';
-//     			ctx.fillText('LOADING', centerX, centerY);
-// 
-// 				//		
-// 			};		
+		if (this.mainCanvas.getContext) {		
 			this.bgContext = this.mainCanvas.getContext('2d');
 			this.shipContext = this.mainCanvas.getContext('2d');
 			this.mainContext = this.mainCanvas.getContext('2d');
