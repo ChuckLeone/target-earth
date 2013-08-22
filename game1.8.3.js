@@ -27,6 +27,7 @@ function init() {
 var imageRepository = new function() {
 	
 	this.background = new Image();
+	this.splashscreen = new Image();
 	this.ship = new Image();
 	this.bullet = new Image();
 	this.enemy = new Image();
@@ -45,6 +46,9 @@ var imageRepository = new function() {
 	this.background.onload = function() {
 		imageLoaded();
 	}
+	this.splashscreen.onload = function() {
+		imageLoaded();
+	}
 	this.ship.onload = function() {
 		imageLoaded();
 	}
@@ -61,6 +65,7 @@ var imageRepository = new function() {
 		imageLoaded();
 	}
 	this.background.src = "media/bg-ED.png";
+	this.background.src = "media/splash-screen.png";
 	this.ship.src = "media/ship.png";
 	this.bullet.src = "media/bullet.png";
 	this.enemy.src = "media/enemy.png";
@@ -1040,7 +1045,7 @@ Explosion.prototype = new Drawable();
 function Game() {
 
 	this.init = function() {
-		this.enemyWave = "";
+		this.enemyWave = 0;
 		
 		this.mainCanvas = document.getElementById('main');
 		this.shipCanvas = document.getElementById('main');
@@ -1170,14 +1175,6 @@ function Game() {
 	//
 	 this.enemyWave = game.enemyWave + 1;
 	 console.log("wave " + game.enemyWave);
-	 
-	 // display wave number
-	 //var a = document.getElementById('player-alert');	
-	 //a.innerHTML = "WAVE" + game.enemyWave;
-	//		a.style.display = 'block';
-	//			var fadeOut = setTimeout(function(){
-	//				a.style.display = "none";
-	//			},2000);
 	 var height = imageRepository.enemy.height;
 	 var width = imageRepository.enemy.width;
 	 var x = 100;
@@ -1185,7 +1182,7 @@ function Game() {
 	 var spacer = y * 1.5;
 		for (var i = 1; i <= 18; i++){
 				game.enemyPool.get(x, y, 2);
-				x += width + 25;
+				x += width + 35;
 				if (i % 6 == 0) {
 						x = 100;
 						y += spacer
