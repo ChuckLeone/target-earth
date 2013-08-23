@@ -132,7 +132,7 @@ function Splashscreen() {
 // 		console.log(counter);
 		this.mainCanvas = document.getElementById('main');
 		
-		(this.mainCanvas.startKey = function(){ document.onkeydown = function(evt) {
+		(this.mainCanvas.startKey = function(){ document.onkeypress = function(evt) {
    			evt = evt || window.event;
     		var charCode = evt.which || evt.keyCode;
     		evt.preventDefault();
@@ -142,8 +142,9 @@ function Splashscreen() {
     		//var game = new Game();
     		if (charCode == 79) {
     			game.init();
-    			this.context.clearRect(0, 0, 725, 380);
-    			document.onkeydown = function(){};
+    			//mainCanvas = document.getElementById('main');
+    			//mainCanvas.context.clearRect(0, 0, 725, 380);
+    			//document.onkeydown = function(){};
     		}
     	 };
     	})();
@@ -180,13 +181,13 @@ Loadingscreen.prototype = new Drawable();
  */
  
 function Background() {
-	this.speed = 0 ;
+	//this.speed = 0 ;
 	
 	this.draw = function() {
-			
-		if (this.y >= this.canvasHeight) {
-			this.y = 0;
-		}	
+		this.context.drawImage(imageRepository.background, this.x, this.y);
+		// if (this.y >= this.canvasHeight) {
+// 			this.y = 0;
+// 		}	
 	};	
 }
 // set background to inherit properties from drawable
@@ -1388,7 +1389,6 @@ function Game() {
 function checkReadyState() {
 	if (game.gameOverAudio.readyState === 4 && game.backgroundAudio.readyState === 4) {
 		window.clearInterval(game.checkAudio);
-		this.mainContext.drawImage(imageRepository.background, this.x, this.y);
 		//document.getElementById('loading').style.display = "none";
 		 //game.loadingScreen();
 		 game.start(); 
