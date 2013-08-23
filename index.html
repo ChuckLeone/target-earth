@@ -12,6 +12,7 @@
 		    <div class="lives">LIVES:<span id="lives"></span></div>
 		    <div class="wave" id="wave">WAVE:<span id="wave-number"></span></div>
 		  </div>
+		<div class="start" id="start"><span onclick="game.init()" class="lives">START ></span></div>
 		<canvas id="main" width="725" height="380">
 		Your browser does not support canvas. Please try again with a different browser
 		<div class="loading" id="loading">LOADING...</div>
@@ -22,8 +23,8 @@
 			<p><span onclick="game.restart()" class="play-again" id="oKey">PRESS O TO PLAY AGAIN</span></p>
 			<p><span onclick="game.splash()" class="play-again" id="yKey">PRESS Y TO QUIT</span></p>
 		</div>
-		
 		<div class="player-alert" id="player-alert"></div>
+		
 		<script src="game1.8.4.js"></script>
 	  </div>		
 	</body>

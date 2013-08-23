@@ -127,9 +127,9 @@ function Splashscreen() {
 
 	this.draw = function() {	
 		this.context.drawImage(imageRepository.splashscreen, this.x, this.y);
-		// counter++;
-// 		
-// 		console.log(counter);
+		// this.context.font = '15pt Arial';
+// 		this.context.fillStyle = 'rgb(255, 255, 255)';
+// 		this.context.fillText("Start Game", 300, 360);
 		this.mainCanvas = document.getElementById('main');
 		
 		(this.mainCanvas.startKey = function(){ document.onkeypress = function(evt) {
