@@ -116,6 +116,10 @@ function Drawable() {
 function Splashscreen() {
 	var splash = this;
 	var counter = 0;
+	var n = KEY_STATUS;
+	document.getElementById('game-over').style.display = "none";
+	document.getElementById('start').style.display = "block";
+    //
 	this.init = function(x, y, width, height) {
 				// default variables
 				this.x = x;
@@ -123,28 +127,22 @@ function Splashscreen() {
 				this.width = width;
 				this.height = height;
 				console.log("splash screen init...");
+				
+				
 		}
 
 	this.draw = function() {	
 		this.context.drawImage(imageRepository.splashscreen, this.x, this.y);
-		// this.context.font = '15pt Arial';
-// 		this.context.fillStyle = 'rgb(255, 255, 255)';
-// 		this.context.fillText("Start Game", 300, 360);
 		this.mainCanvas = document.getElementById('main');
 		
 		(this.mainCanvas.startKey = function(){ document.onkeypress = function(evt) {
    			evt = evt || window.event;
     		var charCode = evt.which || evt.keyCode;
     		evt.preventDefault();
-    		//var o = 79;
-    		//alert("Character typed: " + String.fromCharCode(charCode));
+    		var n = 1;
     		console.log("Character typed: " + String.fromCharCode(charCode))
-    		//var game = new Game();
-    		if (charCode == 79) {
+    		if (String.fromCharCode(charCode) == n) {
     			game.init();
-    			//mainCanvas = document.getElementById('main');
-    			//mainCanvas.context.clearRect(0, 0, 725, 380);
-    			//document.onkeydown = function(){};
     		}
     	 };
     	})();
@@ -610,14 +608,29 @@ function Ship() {
 	}
 	
 	this.draw = function() {
-		this.context.drawImage(imageRepository.ship, this.x, this.y);
+		x = this.x;
+		y = this.y;
+// 		this.context.drawImage(imageRepository.ship, this.x, this.y);
+		var canvas = document.getElementById("main");
+		var context = canvas.getContext("2d");
+		context.strokeStyle = 'rgb(255, 255, 255)';
+		context.beginPath();
+		context.moveTo(x+10, y);
+		context.lineTo(x+19, y+19);
+		context.lineTo(x+10, y+9);
+		context.moveTo(x+9, y+9);
+		context.lineTo(x, y+19);
+		context.lineTo(x+9, y);
+		
+		context.stroke();
+		context.closePath();
 	};
 	this.move = function() {	
 			counter++;
 			//determine if the action is move action
-			if (KEY_STATUS.left || KEY_STATUS.right || KEY_STATUS.down || KEY_STATUS.up) {
+			if (KEY_STATUS.left || KEY_STATUS.right || KEY_STATUS.down || KEY_STATUS.up ) {
 					//the ship moved so erase it's current image so it can be redrawn in new location
-					this.context.clearRect(this.x, this.y, this.width, this.height);
+					this.context.clearRect(this.x-1, this.y, this.width, this.height);
 			
 					//update x a y according to the direction to move
 					//change else if's to if statements to have diag movement
@@ -637,10 +650,7 @@ function Ship() {
 							this.y += this.speed
 							if (this.y >= this.canvasHeight - this.height)
 				   					this.y = this.canvasHeight - this.height;
-					} 
-					// else if(KEY_STATUS.O){
-// 						console.log("O was pressed");
-// 					}		
+					} 		
 			}
 			
 			// redraw the ship
@@ -666,8 +676,9 @@ function Ship() {
 				
 			}
 		
-			if ((KEY_STATUS.space || KEY_STATUS.enter ) && counter >= fireRate && !this.isColliding) {
+			if ((KEY_STATUS.space) && counter >= fireRate && !this.isColliding) {
 					this.fire();
+					//alert("fire!");
 					counter = 0;
 			}
 	};
@@ -773,12 +784,10 @@ function Enemy() {
 		}
 		else {
 			game.playerScore += 100;
-			//alert();
+			alert();
 			this.explodes();
 			return true;
 		}
-		// choose random color
-		//var color = [];
 		
 	};
 	/*
@@ -844,7 +853,7 @@ function SpecialEnemy() {
 	 * move the special enemy
 	 */
 	this.draw = function() {
-		this.context.clearRect(this.x-5, this.y-8, 30, 30);
+		this.context.clearRect(this.x-6, this.y-25, 35, 35);
 		this.x += this.speedX;
 		this.y += this.speedY+3;
 		if (this.x <= this.leftEdge) {
@@ -910,11 +919,7 @@ function SpecialEnemy() {
 				ctx.font = '15px Arial';
 				ctx.fillStyle = 'rgb(255, 0, 0)';
 				ctx.fillText("+1000", this.x, this.y);
-				//a.innerHTML = "1000";
-				//a.style.display = "block";
 				var fadeOut = setTimeout(function(){
-					//a.style.display = "none";
-					//ctx.clearRect(this.x, this.y, this.width, this.height);
 				},1000);
 		}()); 
 	}
@@ -944,7 +949,7 @@ function alert() {
 			a.style.display = "block";
 				var fadeOut = setTimeout(function(){
 					a.style.display = "none";
-				},1000);
+				},800);
 		} 
 		
 		else if (game.playerScore == 1000 || game.playerScore == 2000 || game.playerScore == 3000) {
@@ -953,7 +958,7 @@ function alert() {
 			a.style.display = "block";
 				var fadeOut = setTimeout(function(){
 					a.style.display = "none";
-				},2000);
+				},800);
 		} 
 		
 		else if (game.playerScore == 15000 || game.playerScore == 25000 || game.playerScore == 50000 || game.playerScore == 750000 || game.playerScore == 100000) {
@@ -963,7 +968,7 @@ function alert() {
 			a.style.display = "block";
 				var fadeOut = setTimeout(function(){
 					a.style.display = "none";
-				},2000);
+				},800);
 		}
 		
 		else if (game.enemyWave == 10 || game.enemyWave == 20 || game.enemyWave == 30 || game.enemyWave == 40) {
@@ -973,16 +978,16 @@ function alert() {
 			a.style.display = "block";
 				var fadeOut = setTimeout(function(){
 					a.style.display = "none";
-				},2000);
+				},800);
 		}
 		
-		else if (game.playerScore % 35 === 0) {
+		else if (game.playerScore % 45 === 0) {
 			game.playerBonus.get();
-			//a.innerHTML = "WTF!";
-			//a.style.display = "block";
-			//	var fadeOut = setTimeout(function(){
-			//		a.style.display = "none";
-			//	},2000);
+			a.innerHTML = "WATCH IT!";
+			a.style.display = "block";
+				var fadeOut = setTimeout(function(){
+					a.style.display = "none";
+				},800);
 			game.spawnSpecial();
 		}
 		
@@ -1054,20 +1059,13 @@ function Explosion() {
 		}					
 									
 	};
-	// this.draw = function() {
-// 	
-//     }
     this.clear = function() {
-    	//this.x = 0;
-	 	//this.y = 0;
-    	//this.context.clearRect(this.x, this.y, this.width, this.height);
     	this.context.clearRect(this.x, this.y, this.width*200, this.height*200);
-    	//this.context.clearRect(this.x, this.y, this.width, this.height);
 		this.x = 0;
 		this.y = 0;
 	 	this.alive = false;
 	}
-} 
+};
 
 Explosion.prototype = new Drawable(); 
 
@@ -1103,7 +1101,6 @@ function Game() {
 		this.splashscreen = new Splashscreen();
 		this.splashscreen.init(0,0);
 		
-		console.log("is it showing up?");
 		this.splashscreen.draw();
 	}
 	
@@ -1114,7 +1111,7 @@ function Game() {
 		this.loadingContext = this.mainCanvas.getContext('2d');
 		this.mainContext = this.mainCanvas.getContext('2d');
 		
-		Loadingscreen.prototype.context = this.splashContext;;
+		Loadingscreen.prototype.context = this.splashContext;
 		Loadingscreen.prototype.canvasWidth = this.mainCanvas.width;
 		Loadingscreen.prototype.canvasHeight = this.mainCanvas.height;
 		
@@ -1122,17 +1119,15 @@ function Game() {
 		this.loadingscreen = new Loadingscreen();
 		this.loadingscreen.init(0,0);
 		
-		console.log("is it showing up?");
 		this.loadingscreen.draw();
 	}
 
 	this.init = function() {
+		document.getElementById('start').style.display = "none";
 		this.enemyWave = 0;
 		
 		this.mainCanvas = document.getElementById('main');
 		this.shipCanvas = document.getElementById('main');
-		//this.mainCanvas = document.getElementById('main');
-		
 		
 		//test to see if canvas is supported
 		if (this.mainCanvas.getContext) {		
@@ -1206,47 +1201,42 @@ function Game() {
 			this.playerLives = 3;
 			
 			// audio files
-			this.laser = new SoundPool(10);
+			this.laser = new SoundPool(1);
 			this.laser.init("laser");
 		
-			this.explosion = new SoundPool(20);
+			this.explosion = new SoundPool(1);
 			this.explosion.init("explosion");
 			
-			this.newWave = new SoundPool(20);
+			this.newWave = new SoundPool(1);
 			this.newWave.init("newWave");
 			
-			this.special = new SoundPool(20);
+			this.special = new SoundPool(1);
 			this.special.init("special");
 			
-			this.playerAlert = new SoundPool(20);
+			this.playerAlert = new SoundPool(1);
 			this.playerAlert.init("playerAlert");
 			
-			this.playerBonus = new SoundPool(20);
+			this.playerBonus = new SoundPool(1);
 			this.playerBonus.init("playerBonus");
 			
-			this.playerDied = new SoundPool(5);
+			this.playerDied = new SoundPool(1);
 			this.playerDied.init("playerDied");
-			
-			// this.titleAudio = new Audio("sounds/title.mp3");
-//       		this.titleAudio.loop = true;
-//       		this.titleAudio.volume = .5;
-//       		this.titleAudio.load();
 		
 			this.backgroundAudio = new Audio("sounds/level1.mp3");
       		this.backgroundAudio.loop = true;
       		this.backgroundAudio.volume = .5;
       		this.backgroundAudio.load();
       	
-      		this.gameOverAudio = new Audio("sounds/game-over.wav");
+      		this.gameOverAudio = new Audio("sounds/game-over.mp3");
      		this.gameOverAudio.loop = true;
       		this.gameOverAudio.volume = .25;
       		this.gameOverAudio.load();
 		
 			this.checkAudio = window.setInterval(function(){checkReadyState()},1000);
-		
+			this.background.draw();
 		}
 	};
-	
+	//this.context.drawImage(imageRepository.background, this.x, this.y);
 	// spawn a new wave of enemies
 	 this.spawnWave = function() { 
 	//set the color
@@ -1310,18 +1300,18 @@ function Game() {
  
 // Restart the game
 	this.restart = function() {
+		document.getElementById('game-over').style.display = "none";
 		console.log("restart game");
 		this.titleAudio.pause();
 		this.gameOverAudio.pause();
-
-		document.getElementById('game-over').style.display = "none";
+		
 		this.bgContext.clearRect(0, 0, this.mainCanvas.width, this.mainCanvas.height);
 		this.shipContext.clearRect(0, 0, this.mainCanvas.width, this.mainCanvas.height);
 		this.mainContext.clearRect(0, 0, this.mainCanvas.width, this.mainCanvas.height);
 
 		this.quadTree.clear();
 
-		this.background.init(0,0);
+// 		this.background.init(0,0);
 		this.ship.init(this.shipStartX, this.shipStartY, 
 		               imageRepository.ship.width, imageRepository.ship.height);
 
@@ -1376,8 +1366,27 @@ function Game() {
     		highWave[0] = game.enemyWave;
     	};
     	document.getElementById('highWave').innerHTML = highWave[0];
-    	//this.background.draw();
     	this.mainContext.clearRect(0, 0, 725, 380);
+    	
+    	// event listener
+    	(this.mainCanvas.startKey = function(){ document.onkeypress = function(evt) {
+   			evt = evt || window.event;
+    		var charCode = evt.which || evt.keyCode;
+    		evt.preventDefault();
+    		var n = 1;
+    		var q = 2;
+    		console.log("Character typed: " + String.fromCharCode(charCode))
+    		if (String.fromCharCode(charCode) == n) {
+    			game.restart();
+    			document.getElementById('game-over').style.display = "none";
+    		} else if (String.fromCharCode(charCode) == q) {
+    			game.splash();
+    			document.getElementById('game-over').style.display = "none";
+    			game.gameOverAudio.pause()
+    		}
+    	 };
+    	})();
+    	// end event listener
 		
   	};
 
@@ -1411,6 +1420,7 @@ function SoundPool(maxSize) {
 		if (object == "laser") {
 			for (var i = 0; i < size; i++) {
 				//initialize the sound
+//				laser = new Audio("sounds/noise01.wav");
 				laser = new Audio("sounds/laser.wav");
 				laser.volume = .12;
 				laser.load();
@@ -1440,7 +1450,7 @@ function SoundPool(maxSize) {
 		
 		else if (object == "playerBonus") {
 			for (var i = 0; i < size; i++){
-				var playerBonus = new Audio("sounds/powerup8.wav");
+				var playerBonus = new Audio("sounds/powerup2.wav");
 				playerBonus.volume = .5;
 				playerBonus.load();
 				pool[i] = playerBonus;
@@ -1467,23 +1477,6 @@ function SoundPool(maxSize) {
 			}
 			
 		}
-		// else if (object == "newWave") {
-// 			for (var i = 0; i < size; i++){
-// 			  function getRandomSound1() {
-//              	 soundSet = ['sounds/spawnwave1.wav', 'sounds/spawnwave2.wav', 'sounds/spawnwave3.wav'];
-//               	 n = Math.floor((Math.random()*2));
-//               	 return soundSet[n];
-//     		  }
-//     		  
-//               	var newWave = new Audio(getRandomSound1());
-//               	//console.log("new wave sound " + n);
-//               	newWave.volume = .6;
-//               	newWave.load();
-//               	pool[i] = newWave;
-//     		  
-// 			}
-			
-//		}
 		
 		else if (object == "explosion") {
 			for (var i = 0; i < size; i++){
@@ -1581,41 +1574,7 @@ function detectCollision() {
 		}
 	}
 };
-/** keycode for button presses
- * original code by Doug McInnes
- */
- KEY_CODES = {
- 	32: 'space',
- 	37: 'left',
- 	38: 'up',
- 	39: 'right',
- 	40: 'down',
- 	13: 'enter',
- 	//79: 'O',
- 	88: 'Y'
- }
-// creates the array to hold the KEY_CODES and sets all their values to false
-KEY_STATUS = {};
-for (code in KEY_CODES) {
-	KEY_STATUS[ KEY_CODES[ code ]] = false;
-}
-// sets up the document to listen for onkeydown events
-document.onkeydown = function(e) {
-	var keyCode = (e.keyCode) ? e.keyCode : e.charCode;
-	if (KEY_CODES[keyCode]) {
-		e.preventDefault();
-		KEY_STATUS[KEY_CODES[keyCode]] = true;
-	}
-}
 
-// sets up the document to listen for onkeyup events
-document.onkeyup = function(e) {
-	var keyCode = (e.keyCode) ? e.keyCode: e.charCode;
-	if (KEY_CODES[keyCode]) {
-		e.preventDefault();
-		KEY_STATUS[KEY_CODES[keyCode]] = false;
-	}
-}
 
 /**
  * requestAnim shim by Paul Irish

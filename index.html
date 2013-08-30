@@ -3,29 +3,44 @@
 	<head>
 		<title>Target Earth</title>
 		<link rel="stylesheet" type="text/css" href="main.css"/>
-<!-- 		<script src="jquery-1.10.2.js"></script> -->
+		<script type="text/javascript" src="index.js"></script>
+		<script type="text/javascript" src="controllers.js"></script>
+		<script type="text/javascript" src="keys.js"></script>
+		<script type="text/javascript" src="quadtree.js"></script>
+		<script type="text/javascript" src="game1.8.6.js"></script>
 	</head>
 	<body>
 	  <div id="container">
 	      <div id="dashboard">
 		    <div class="score">SCORE:<span id="score"></span></div>
 		    <div class="lives">LIVES:<span id="lives"></span></div>
-		    <div class="wave" id="wave">WAVE:<span id="wave-number"></span></div>
+		    <div class="wave" id="wave">WAVE:<span id="wave-number"></span> <div id="gamepad"></div></div>
 		  </div>
-		<div class="start" id="start"><span onclick="game.init()" class="lives">START ></span></div>
+		<button class="start" id="start"><span onclick="game.init()">PRESS 1 TO START</span></button>
 		<canvas id="main" width="725" height="380">
 		Your browser does not support canvas. Please try again with a different browser
-		<div class="loading" id="loading">LOADING...</div>
 		</canvas>
-		<div class="game-over" id="game-over">GAME OVER
-			<p><div class="highs">High Score: <span id="highScore"></span></div></p>
-			<p><div class="highs">Highest Wave:<span id="highWave"></span></div></p>
-			<p><span onclick="game.restart()" class="play-again" id="oKey">PRESS O TO PLAY AGAIN</span></p>
-			<p><span onclick="game.splash()" class="play-again" id="yKey">PRESS Y TO QUIT</span></p>
+		<div class="game-over" id="game-over"><p>GAME OVER</p>
+			<div class="highs" style="float: left;">High Score: <span id="highScore"></span></div>
+			<div class="highs" style="float: right;">Highest Wave:<span id="highWave"></span></div>
+			<div style="height: 30px;"></div>
+			<p><span onclick="game.restart()" class="play-again" id="oKey">PRESS 1 TO PLAY AGAIN</span></p>
+			<p><span onclick="game.splash()" class="play-again" id="yKey">PRESS 2 TO QUIT</span></p>
 		</div>
-		<div class="player-alert" id="player-alert"></div>
 		
-		<script src="game1.8.4.js"></script>
+		<div class="player-alert" id="player-alert"></div>
+		<script type="text/javascript">
+			initControllers();
+			function buttonPressed(player, button)
+			{
+				document.getElementById("gamepad").innerHTML = "button "+button+" pressed by player "+player;
+			}
+
+			function buttonReleased(player, button)
+			{
+				document.getElementById("gamepad").innerHTML = "button "+button+" released by player "+player;
+			}
+		</script>
 	  </div>		
 	</body>
 </html>
