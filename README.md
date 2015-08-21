@@ -1,8 +1,9 @@
 target-earth
 ============
 
-<<<<<<< HEAD
 HTML 5 Game prototype using canvas
 =======
-HTML 5 canvas sci-fi shooter game
->>>>>>> dc26002e1dfad2d8c17fd25784da07d3fe4d6da6
+HTML 5 canvas sci-fi shooter game based on the tutorial by Pascal Retting: http://www.html5gamedevelopment.com/html5-game-tutorials/2013-06-5-part-html5-game-tutorial-galaxian-shooter
+
+Graphics, sound and music by Chuck Leone @ChuckLeone on twitter
+Sounds developing using http://www.bfxr.net/
